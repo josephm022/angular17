@@ -4,6 +4,7 @@ export interface Usuario {
     apelllidos:       string;
     email:            string;
     num_telefono:     string;
+    num_documento:     string;
     contrasena:       string;
     genero:           string;
     foto?:            string;

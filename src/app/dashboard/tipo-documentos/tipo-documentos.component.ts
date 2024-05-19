@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { TipoDocService } from '../../services/tipo-doc.service';
+import { tipoDocumento } from '../../interfaces/tipo-doc.interface';
 
 @Component({
   selector: 'app-tipo-documentos',
@@ -8,5 +10,17 @@ import { Component } from '@angular/core';
   styleUrl: './tipo-documentos.component.css'
 })
 export class TipoDocumentosComponent {
+  tipoDocs: any =[];
+
+  constructor(private tipoDocService: TipoDocService) {}
+  ngOnInit(): void {
+    this.obtenerDocumentos();
+    }
+
+  obtenerDocumentos() {
+    this.tipoDocService.obtenerDocumentos().subscribe((res:tipoDocumento) => {
+      this.tipoDocs = res;
+    });
+  }
 
 }

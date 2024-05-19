@@ -6,12 +6,14 @@ import { Injectable } from '@angular/core';
 })
 export class UsuarioService {
 
-  private URL = 'http://miapi.com/index.php?action=usuario';
+  private URL = 'http://miapi.com';
 
   constructor(private http:HttpClient){}
 
   obtenerUsuarios(){
-    return this.http.get<any>(this.URL);
+    return this.http.get<any>(`${this.URL}/index.php?action=usuario`);
   }
+
+  
 }
 

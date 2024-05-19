@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, 
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { publicDecrypt } from 'crypto';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +25,6 @@ export class LoginComponent implements OnInit{
     })
   }
 
-
   get email(){
     return this.formUser.get('email');
   }
@@ -35,15 +33,15 @@ export class LoginComponent implements OnInit{
     return this.formUser.get('password');
   }
 
-
   login() {
-
     const email = this.formUser.get('email')?.value;
     const password = this.formUser.get('password')?.value;
 
     this.authService.login(email, password).subscribe(response => {
       if (response.auth) {
         localStorage.setItem('token', response.token);
+        // Guarda la información del usuario en localStorage
+        localStorage.setItem('user', JSON.stringify(response.user));
         this.router.navigate(['/home']);
       } else {
         console.error('Login failed', response.error);

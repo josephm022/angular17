@@ -6,6 +6,7 @@ import { UsuariosComponent } from './dashboard/usuarios/usuarios.component';
 import { RolesComponent } from './dashboard/roles/roles.component';
 import { TipoDocumentosComponent } from './dashboard/tipo-documentos/tipo-documentos.component';
 import { AuthGuard } from './guard/auth.guard';
+import { HomeComponent } from './dashboard/home/home.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -16,6 +17,7 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivate: [AuthGuard], // Aplicar el guardia de autenticación a esta ruta principal
     children: [
+      {path: '', component:HomeComponent},
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'roles', component: RolesComponent },
       { path: 'documentos', component: TipoDocumentosComponent },
