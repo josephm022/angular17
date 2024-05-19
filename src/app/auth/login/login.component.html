@@ -1,0 +1,28 @@
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-4">
+            <h2 class="text-center mt-5">Inicia Sesion</h2>
+            <form [formGroup]="formUser">
+                @if (validarUsuario) {<div class="alert alert-danger mt-2" >{{message}}</div>}
+                <div class="mb-3">
+                    <label for="login" class="form-label">Correo electrónico:</label>
+                    <input type="email" formControlName="email" class="form-control" id="login" placeholder="Ingresa tu Email" >
+                    <div class="alert alert-danger mt-2" [hidden]="email?.valid || email?.pristine">
+                        @if (email?.errors?.['required']) {<span >El email es obligatorio</span>}
+                        @if (email?.errors?.['email']) {<span >El email no es valido</span>}
+                    </div> 
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" formControlName="password" id="password" placeholder="Ingresa tu Contraseña" name="password">
+                    <div class="alert alert-danger mt-2" [hidden]="password?.valid || password?.pristine">
+                        La contraseña es obligatoria
+                    </div> 
+                </div>
+                <button type="submit" class="btn btn-primary w-100" [disabled]="formUser.invalid" (click)="login()">Ingresar</button>
+                <button type="button" class="btn btn-secondary w-100 mt-2" [routerLink]="['/register']">Registrate</button>
+            </form>
+        </div>
+    </div>
+</div>

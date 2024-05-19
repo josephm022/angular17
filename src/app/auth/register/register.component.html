@@ -1,0 +1,75 @@
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mt-5">Registro de Usuario</h2>
+                <form>
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">Nombres</label>
+                        <input type="text" class="form-control" id="firstName" placeholder="Ingrese sus nombres" maxlength="40">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Apellidos</label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Ingrese sus apellidos" maxlength="40">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Ingrese su email" maxlength="40">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="password" placeholder="Ingrese su Contraseña" maxlength="200">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">Número de Celular</label>
+                        <input type="tel" class="form-control" id="phoneNumber" placeholder="Ingrese su número de celular">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="documentType" class="form-label">Tipo de Documento de Identidad</label>
+                            <select class="form-select" id="documentType">
+                                <option value="cedula">Cédula de Ciudadanía</option>
+                                <option value="tarjeta">Tarjeta de Identidad</option>
+                                <option value="pasaporte">Pasaporte</option>
+                                <option value="extranjero">Cédula de Extranjería</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="documentNumber" class="form-label">Número de Documento de Identidad</label>
+                            <input type="text" class="form-control" id="documentNumber" placeholder="Ingrese su número de documento">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="gender" class="form-label">Género</label>
+                                <select class="form-select" id="gender" >
+                                    <option value="masculino">Masculino</option>
+                                    <option value="femenino">Femenino</option>
+                                    <option value="otro">Otro</option>
+                                    <option value="prefieroNoDecir">Prefiero no decir</option>
+                                </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="role" class="form-label">Rol dentro de la Aplicación</label>
+                                <select class="form-select" id="role">
+                                    <option value="superAdmin">Super Administrador</option>
+                                    <option value="usuario">Usuario</option>
+                                </select>
+                        </div>
+                    </div> 
+                    <div class="mb-3">
+                        <label for="birthDate" class="form-label">Fecha de Nacimiento</label>
+                        <input type="date" class="form-control" id="birthDate" name="birthDate">
+                    </div>
+                    <div class="mb-3">
+                        <label for="photo" class="form-label">Subir Imagen</label>
+                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary w-100" [routerLink]="['/login']">Registrar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
