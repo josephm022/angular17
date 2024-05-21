@@ -1,0 +1,21 @@
+.imgContacto {
+    width: 50px;
+    height: 50px;
+    transform: scale(1);
+    transition: transform 0.25s;
+    transition-delay: 0s; /* Sin retardo inicialmente */
+    position: relative; /* Para que z-index funcione */
+    z-index: 1; /* Valor base bajo */
+}
+
+.imgContacto:hover {
+    transition-delay: 0.5s; /* Retardo de 1 segundo antes de aumentar la escala */
+}
+
+.imgContacto:hover {
+    transform: scale(3.2);
+    cursor: pointer;
+    z-index: 10; /* Asegura que la imagen en hover esté sobre las demás */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Añade sombra para resaltar la imagen */
+    background-color: white; /* Añade fondo blanco para que se vea bien al agrandarse */
+}

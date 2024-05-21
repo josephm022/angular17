@@ -1,0 +1,33 @@
+@if ("usuario"){
+    <div class="container">
+        <div class="row">
+          <div class="col-md-6 offset-md-3">
+            <div class="mt-5 text-center"> 
+              <h1 class="text-center">¡Bienvenido {{usuario.nombres}}!</h1>
+              <div class="card text-center">
+                <div class="card-body">
+                  @if (usuario.foto) {
+                  <div style="display: inline-block;"> <!-- Estilo inline para centrar horizontalmente -->
+                    <img [src]="usuario.foto | domseguro" class="user-img mb-3"> <!-- Mantiene la clase 'user-img' en la imagen -->
+                  </div>
+                  } @else {
+                  <div style="display: inline-block;"> <!-- Estilo inline para centrar horizontalmente -->
+                    <img [src]="noImage" class="user-img mb-3"> <!-- Mantiene la clase 'user-img' en la imagen -->
+                  </div>
+                  }
+                  <p class="card-text">Correo electrónico: {{usuario.email}}</p>
+                  <p class="card-text">Fecha de Nacimiento: {{usuario.fecha_nacimiento}}</p>
+                  <p class="card-text">Numero de Identificacion: {{usuario.num_documento}}</p>
+                  <p class="card-text">Tipo de Identificacion: {{tipoDoc.descripcion}}</p>
+                  <p class="card-text">Rol: {{rol.descripcion}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+
+}
+

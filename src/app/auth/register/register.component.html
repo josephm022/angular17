@@ -1,0 +1,76 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="text-center mt-5">Registro de Usuario</h2>
+            <form  [formGroup]="formUser">
+                <div class="mb-3">
+                    <label for="firstName" class="form-label">Nombres</label>
+                    <input type="text" class="form-control" formControlName="nombre" id="firstName" placeholder="Ingrese sus nombres" maxlength="40">
+                </div>
+                <div class="mb-3">
+                    <label for="lastName" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" formControlName="apellido" id="lastName" placeholder="Ingrese sus apellidos" maxlength="40">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" formControlName="email" id="email" placeholder="Ingrese su email" maxlength="40">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" formControlName="password" id="password" placeholder="Ingrese su Contraseña" maxlength="200">
+                </div>
+                <div class="mb-3">
+                    <label for="phoneNumber" class="form-label">Número de Celular</label>
+                    <input type="tel" class="form-control" formControlName="numerotel" id="phoneNumber" placeholder="Ingrese su número de celular">
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="documentType" class="form-label">Tipo de Documento de Identidad</label>
+
+                        <select class="form-select" formControlName="tipodocumento" id="documentType">
+                            @for (tipoDocumento of tipoDocs; track tipoDocumento; let id = $index) {
+                                <option value="{{tipoDocumento.id}}">{{tipoDocumento.descripcion}}</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="documentNumber" class="form-label">Número de Documento de Identidad</label>
+                        <input type="text" class="form-control" formControlName="numdocumento" id="documentNumber" placeholder="Ingrese su número de documento">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="gender" class="form-label">Género</label>
+                            <select class="form-select" formControlName="genero" id="gender" >
+                                <option value="masculino">Masculino</option>
+                                <option value="femenino">Femenino</option>
+                                <option value="otro">Otro</option>
+                                <option value="prefieroNoDecir">Prefiero no decir</option>
+                            </select>   
+                    </div>
+                    <div class="col-md-6">
+                        <label for="role" class="form-label">Rol dentro de la Aplicación</label>
+                            <select class="form-select" formControlName="rol" id="role">
+                                @for (rol of roles; track rol; let id = $index) {
+                                <option value={{rol.id}}>{{rol.descripcion}}</option>
+                                }
+                            </select>
+                    </div>
+                </div> 
+                <div class="mb-3">
+                    <label for="birthDate" class="form-label">Fecha de Nacimiento</label>
+                    <input type="date" class="form-control" formControlName="fecha" id="birthDate" name="birthDate">
+                </div>
+                <div class="mb-3">
+                    <label for="photo" class="form-label">Subir Imagen</label>
+                    <input type="file" class="form-control" formControlName="imagen" id="photo" name="photo" accept="image/*">
+                </div>
+
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary w-100"  (click)="registrarUsuarios()">Registrar Usuario</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
