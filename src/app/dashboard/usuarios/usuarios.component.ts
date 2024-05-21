@@ -5,10 +5,13 @@ import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../interfaces/usuario.interface';
 import { DomseguroPipe } from '../../pipes/domseguro.pipe';
 import {
+  AbstractControl,
+  AsyncValidatorFn,
   FormBuilder,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { UpLoadImg } from '../../interfaces/cargarimg.interface';
@@ -19,6 +22,9 @@ import { RolesService } from '../../services/roles.service';
 import { TipoDocService } from '../../services/tipo-doc.service';
 import { tipoDocumento } from '../../interfaces/tipo-doc.interface';
 import { CommonModule } from '@angular/common';
+import { numericValidator } from '../../validators/numericvalidator';
+import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-usuarios',
@@ -38,6 +44,8 @@ export class UsuariosComponent implements OnInit {
   usuarios: any = [];
   usuario: any;
   usuarioSeleccionado: any = {};
+  maxSuperAdmins = 2;
+  errorMessage: string | null = null;
 
   roles: Map<string, string> = new Map();
   documentos: Map<string, string> = new Map();
@@ -66,15 +74,15 @@ export class UsuariosComponent implements OnInit {
     this.Form = this.fb.group({
       nombres: ['', [Validators.required]],
       apellidos: ['', [Validators.required]],
-      email: ['', [Validators.required, Validators.email]],
-      num_telefono: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(40)]],
+      num_telefono: ['', [Validators.required,numericValidator()]],
       num_documento: ['', [Validators.required]],
-      contrasena: ['', [Validators.required]],
+      contrasena: ['', [Validators.required,Validators.maxLength(200),Validators.minLength(3)]],
       genero: ['', [Validators.required]],
       foto: null,
       fecha_nacimiento: ['', [Validators.required]],
       activo: [''],
-      id_rol: ['', [Validators.required]],
+      id_rol: ['', [Validators.required],[this.maxSuperAdminsValidator(this.usuarioService, this.maxSuperAdmins)]],
       id_tipo_doc: ['', [Validators.required]],
     });
     this.obtenerUsuarios();
@@ -82,7 +90,33 @@ export class UsuariosComponent implements OnInit {
     this.conseguirRoles();
     this.obtenerDocumentos();
     this.conseguirDocumentos();
+
+    this.Form.get('id_rol')?.statusChanges.subscribe(status => {
+      if (status === 'INVALID' && this.Form.get('id_rol')?.errors?.['maxSuperAdmins']) {
+        this.errorMessage = 'No se pueden crear más de dos usuarios con el rol de Super Administrador';
+      } else {
+        this.errorMessage = null;
+      }
+    });
   }
+    /**VALIDACION DEL MAXIMO DE USUARIOS SUPER ADMIN */
+  maxSuperAdminsValidator(usuarioService: UsuarioService, maxSuperAdmins: number): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      if (control.value === '1') {
+        return usuarioService.contarUsuariosConRol('1').pipe(
+          map(count => {
+            if (count >= maxSuperAdmins) {
+              return { maxSuperAdmins: true };
+            }
+            return null;
+          })
+        );
+      }
+      return of(null);
+    };
+  }
+/******************************************************** */
+  
 
   /*****OBTENER UN USUARIO PARA EDITARLO */
   obtenerUnUsuario(id: string) {

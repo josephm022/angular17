@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Usuario } from '../interfaces/usuario.interface';
 import { UpLoadImg } from '../interfaces/cargarimg.interface';
-import { Observable, catchError, of, throwError } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,15 @@ export class UsuarioService {
   obtenerUsuarios(){
     return this.http.get<any>(`${this.URL}/index.php?action=usuario`);
   }
+
+  contarUsuariosConRol(rol: string): Observable<number> {
+    return this.obtenerUsuarios().pipe(
+      map(usuarios => usuarios.filter((usuario:Usuario) => usuario.id_rol === rol).length)
+    );
+  }
+
+
+
   obtenerUnUsuario(id:string){
     return this.http.get<any>(`${this.URL}/index.php?action=usuario&id=${id}`)
   }

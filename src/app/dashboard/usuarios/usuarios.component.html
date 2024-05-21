@@ -3,11 +3,7 @@
     <i class="fa-solid fa-users"></i> Gestion de los Usuarios
   </h3>
 
-  <button
-    class="btn btn-secondary mb-4"
-    data-bs-toggle="modal"
-    data-bs-target="#agregar"
-  >
+  <button class="btn btn-secondary mb-4" data-bs-toggle="modal" data-bs-target="#agregar">
     <i class="fas fa-plus"></i> Agregar Usuario
   </button>
 
@@ -27,13 +23,8 @@
       @for (usuario of usuarios; track usuario; let id = $index) {
       <tr>
         <th scope="row">
-          <a
-            href="#"
-            (click)="verUsuario(usuario.id)"
-            data-bs-toggle="modal"
-            data-bs-target="#verUsuario"
-            >{{ id + 1 }}</a
-          >
+          <a href="#" (click)="verUsuario(usuario.id)" data-bs-toggle="modal" data-bs-target="#verUsuario">{{ id + 1
+            }}</a>
         </th>
         <td>{{ usuario.nombres }} {{ usuario.apellidos }}</td>
         <td>{{ usuario.email }}</td>
@@ -41,21 +32,14 @@
         <td>{{ obtenerDescripcionRol(usuario.id_rol) }}</td>
         @if (usuario.foto) {
         <td>
-          <img
-            [src]="usuario.foto | domseguro"
-            class="img-thumbnail imgContacto"
-          />
+          <img [src]="usuario.foto | domseguro" class="img-thumbnail imgContacto" />
         </td>
         }@else {
         <td><img [src]="noImage" class="img-thumbnail imgContacto" /></td>
         }
         <td>
-          <button
-            class="btn btn-secondary me-2"
-            data-bs-toggle="modal"
-            data-bs-target="#editar"
-            (click)="obtenerUnUsuario(usuario.id)"
-          >
+          <button class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#editar"
+            (click)="obtenerUnUsuario(usuario.id)">
             <i class="fas fa-pencil-alt"></i>
           </button>
           <button class="btn btn-danger">
@@ -69,27 +53,15 @@
 </div>
 
 <!-- Modal Ver Usuario -->
-<div
-  class="modal fade"
-  id="verUsuario"
-  data-backdrop="static"
-  data-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="verUsuarioLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="verUsuario" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="verUsuarioLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-dark text-white">
         <h5 class="modal-title" id="verUsuarioLabel">
           <i class="fas fa-eye"></i> Ver Usuario
         </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="form-group">
@@ -135,10 +107,7 @@
           <label class="fw-bold">Foto:</label>
           @if (usuarioSeleccionado.foto) {
           <div>
-            <img
-              [src]="usuarioSeleccionado.foto | domseguro"
-              class="img-thumbnail imgContacto"
-            />
+            <img [src]="usuarioSeleccionado.foto | domseguro" class="img-thumbnail imgContacto" />
           </div>
           }@else {
           <div>
@@ -148,11 +117,7 @@
         </div>
 
         <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-          >
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
             Cerrar
           </button>
         </div>
@@ -162,114 +127,85 @@
 </div>
 
 <!-- Modal Agregar -->
-<div
-  class="modal fade"
-  id="agregar"
-  data-backdrop="static"
-  data-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="agregar" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-dark text-white">
         <h5 class="modal-title" id="staticBackdropLabel">
           <i class="fas fa-plus"></i> Agregar Usuario
         </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          (click)="cerrarForm()"
-          aria-label="Close"
-        >
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="cerrarForm()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form
-          (ngSubmit)="agregarUsuario()"
-          [formGroup]="Form"
-          autocomplete="off"
-        >
+        <form (ngSubmit)="agregarUsuario()" [formGroup]="Form" autocomplete="off">
           <div class="form-group">
-            <label for="nombre" class="form-label fw-bold">Nombre:</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Nombre"
-              formControlName="nombres"
-            />
+            <label for="nombres" class="form-label fw-bold">Nombre:</label>
+            <input type="text" class="form-control" placeholder="Nombre" formControlName="nombres" />
+            <div *ngIf="Form.get('nombres')?.touched && Form.get('nombres')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('nombres')?.errors?.['required']">El nombre es requerido</div>
+            </div>
           </div>
+        
           <div class="form-group">
             <label for="apellidos" class="form-label fw-bold">Apellidos:</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Apellidos"
-              formControlName="apellidos"
-            />
+            <input type="text" class="form-control" placeholder="Apellidos" formControlName="apellidos" />
+            <div *ngIf="Form.get('apellidos')?.touched && Form.get('apellidos')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('apellidos')?.errors?.['required']">Los apellidos son requeridos</div>
+            </div>
           </div>
+        
           <div class="form-group">
-            <label for="email" class="form-label fw-bold"
-              >Correo Electronico:</label
-            >
-            <input
-              type="email"
-              class="form-control"
-              placeholder="Email"
-              formControlName="email"
-            />
+            <label for="email" class="form-label fw-bold">Correo Electronico:</label>
+            <input type="email" class="form-control" placeholder="Email" formControlName="email" />
+            <div *ngIf="Form.get('email')?.touched && Form.get('email')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('email')?.errors?.['required']">El correo electrónico es requerido</div>
+              <div *ngIf="Form.get('email')?.errors?.['email']">Formato de correo no válido</div>
+              <div *ngIf="Form.get('email')?.errors?.['maxlength']">El correo no puede exceder 40 caracteres</div>
+            </div>
           </div>
+        
           <div class="form-group">
-            <label for="tel" class="form-label fw-bold"
-              >Numero de celular:</label
-            >
-            <input
-              type="tel"
-              class="form-control"
-              placeholder="Numero de celular"
-              formControlName="num_telefono"
-            />
+            <label for="num_telefono" class="form-label fw-bold">Numero de celular:</label>
+            <input type="tel" class="form-control" placeholder="Numero de celular" formControlName="num_telefono" />
+            <div *ngIf="Form.get('num_telefono')?.touched && Form.get('num_telefono')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('num_telefono')?.errors?.['required']">El número de celular es requerido</div>
+              <div *ngIf="Form.get('num_telefono')?.errors?.['numeric']">El número de celular debe ser numérico</div>
+            </div>
           </div>
+        
           <div class="form-group">
-            <label for="tipo" class="form-label fw-bold"
-              >Tipo de documento de identidad:</label
-            >
-            <select
-              class="form-select"
-              formControlName="id_tipo_doc"
-              id="documentType"
-            >
-              @for (tipoDocumento of TipoDocs; track tipoDocumento; let id =
-              $index) {
-              <option value="{{ tipoDocumento.id }}">
+            <label for="id_tipo_doc" class="form-label fw-bold">Tipo de documento de identidad:</label>
+            <select class="form-select" formControlName="id_tipo_doc" id="documentType">
+              <option *ngFor="let tipoDocumento of TipoDocs; let id = index" [value]="tipoDocumento.id">
                 {{ tipoDocumento.descripcion }}
               </option>
-              }
             </select>
+            <div *ngIf="Form.get('id_tipo_doc')?.touched && Form.get('id_tipo_doc')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('id_tipo_doc')?.errors?.['required']">El tipo de documento es requerido</div>
+            </div>
           </div>
+        
           <div class="form-group">
-            <label for="documento" class="form-label fw-bold"
-              >Documento de Identidad:</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Documento"
-              formControlName="num_documento"
-            />
+            <label for="num_documento" class="form-label fw-bold">Documento de Identidad:</label>
+            <input type="text" class="form-control" placeholder="Documento" formControlName="num_documento" />
+            <div *ngIf="Form.get('num_documento')?.touched && Form.get('num_documento')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('num_documento')?.errors?.['required']">El documento de identidad es requerido</div>
+            </div>
           </div>
+        
           <div class="form-group">
-            <label for="password" class="form-label fw-bold">Contraseña:</label>
-            <input
-              type="password"
-              class="form-control"
-              placeholder="Contraseña"
-              formControlName="contrasena"
-            />
+            <label for="contrasena" class="form-label fw-bold">Contraseña:</label>
+            <input type="password" class="form-control" placeholder="Contraseña" formControlName="contrasena" />
+            <div *ngIf="Form.get('contrasena')?.touched && Form.get('contrasena')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('contrasena')?.errors?.['required']">La contraseña es requerida</div>
+              <div *ngIf="Form.get('contrasena')?.errors?.['minlength']">La contraseña debe tener al menos 3 caracteres</div>
+              <div *ngIf="Form.get('contrasena')?.errors?.['maxlength']">La contraseña no puede exceder 200 caracteres</div>
+            </div>
           </div>
+        
           <div class="form-group">
             <label for="genero" class="form-label fw-bold">Genero:</label>
             <select class="form-select" formControlName="genero">
@@ -278,167 +214,127 @@
               <option value="Otro">Otro</option>
               <option value="PrefieroNoDecir">Prefiero no decir</option>
             </select>
+            <div *ngIf="Form.get('genero')?.touched && Form.get('genero')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('genero')?.errors?.['required']">El género es requerido</div>
+            </div>
           </div>
-
+        
           <div class="form-group">
-            <label for="fecha_nacimiento" class="form-label fw-bold"
-              >Fecha de nacimiento:</label
-            >
-            <input
-              type="date"
-              class="form-control"
-              placeholder="Fecha de Nacimiento"
-              formControlName="fecha_nacimiento"
-            />
+            <label for="fecha_nacimiento" class="form-label fw-bold">Fecha de nacimiento:</label>
+            <input type="date" class="form-control" placeholder="Fecha de Nacimiento" formControlName="fecha_nacimiento" />
+            <div *ngIf="Form.get('fecha_nacimiento')?.touched && Form.get('fecha_nacimiento')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('fecha_nacimiento')?.errors?.['required']">La fecha de nacimiento es requerida</div>
+            </div>
           </div>
-
+        
           <div class="form-group">
-            <label for="rol" class="form-label fw-bold">Rol:</label>
+            <label for="id_rol" class="form-label fw-bold">Rol:</label>
             <select class="form-select" formControlName="id_rol">
-              @for (Rol of Roles; track Rol; let id = $index) {
-              <option value="{{ Rol.id }}">{{ Rol.descripcion }}</option>
-              }
+              <option *ngFor="let rol of Roles; let id = index" [value]="rol.id">{{ rol.descripcion }}</option>
             </select>
+            <div *ngIf="Form.get('id_rol')?.touched && Form.get('id_rol')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('id_rol')?.errors?.['required']">El rol es requerido</div>
+              <div *ngIf="Form.get('id_rol')?.errors?.['maxSuperAdmins']">{{ errorMessage }}</div>
+            </div>
           </div>
-
+        
           <div class="form-group">
             <label for="foto" class="form-label fw-bold">Foto:</label><br />
-            <input
-              type="file"
-              accept="image/*"
-              (change)="seleccionarArchivo($event)"
-              formControlName="foto"
-            />
+            <input type="file" accept="image/*" (change)="seleccionarArchivo($event)" formControlName="foto" />
           </div>
+        
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              (click)="cerrarForm()"
-            >
-              Close
-            </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              [disabled]="Form.invalid"
-            >
-              Guardar
-            </button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cerrarForm()">Close</button>
+            <button type="submit" class="btn btn-primary" [disabled]="Form.invalid">Guardar</button>
           </div>
         </form>
+        
+        
       </div>
     </div>
   </div>
 </div>
 
 <!-- Modal Editar -->
-<div
-  class="modal fade"
-  id="editar"
-  data-backdrop="static"
-  data-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
+<div class="modal fade" id="editar" data-backdrop="static" data-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header bg-dark text-white">
         <h5 class="modal-title" id="staticBackdropLabel">
           <i class="fas fa-pencil-alt"></i> Editar Usuario
         </h5>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          (click)="cerrarForm()"
-          aria-label="Close"
-        >
+        <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="cerrarForm()" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form
-          (ngSubmit)="editarUsuario()"
-          [formGroup]="Form"
-          autocomplete="off"
-        >
+        <form (ngSubmit)="editarUsuario()" [formGroup]="Form" autocomplete="off">
           <div class="form-group">
-            <label for="nombre" class="form-label fw-bold">Nombre:</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Nombre"
-              formControlName="nombres"
-            />
+            <label for="nombres" class="form-label fw-bold">Nombre:</label>
+            <input type="text" class="form-control" placeholder="Nombre" formControlName="nombres" />
+            <div *ngIf="Form.get('nombres')?.touched && Form.get('nombres')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('nombres')?.errors?.['required']">El nombre es requerido</div>
+            </div>
           </div>
+        
           <div class="form-group">
             <label for="apellidos" class="form-label fw-bold">Apellidos:</label>
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Apellidos"
-              formControlName="apellidos"
-            />
+            <input type="text" class="form-control" placeholder="Apellidos" formControlName="apellidos" />
+            <div *ngIf="Form.get('apellidos')?.touched && Form.get('apellidos')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('apellidos')?.errors?.['required']">Los apellidos son requeridos</div>
+            </div>
           </div>
+        
           <div class="form-group">
-            <label for="email" class="form-label fw-bold"
-              >Correo Electronico:</label
-            >
-            <input
-              type="email"
-              class="form-control"
-              placeholder="Email"
-              formControlName="email"
-            />
+            <label for="email" class="form-label fw-bold">Correo Electronico:</label>
+            <input type="email" class="form-control" placeholder="Email" formControlName="email" />
+            <div *ngIf="Form.get('email')?.touched && Form.get('email')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('email')?.errors?.['required']">El correo electrónico es requerido</div>
+              <div *ngIf="Form.get('email')?.errors?.['email']">Formato de correo no válido</div>
+              <div *ngIf="Form.get('email')?.errors?.['maxlength']">El correo no puede exceder 40 caracteres</div>
+            </div>
           </div>
+        
           <div class="form-group">
-            <label for="tel" class="form-label fw-bold"
-              >Numero de celular:</label
-            >
-            <input
-              type="tel"
-              class="form-control"
-              placeholder="Numero de celular"
-              formControlName="num_telefono"
-            />
+            <label for="num_telefono" class="form-label fw-bold">Numero de celular:</label>
+            <input type="tel" class="form-control" placeholder="Numero de celular" formControlName="num_telefono" />
+            <div *ngIf="Form.get('num_telefono')?.touched && Form.get('num_telefono')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('num_telefono')?.errors?.['required']">El número de celular es requerido</div>
+              <div *ngIf="Form.get('num_telefono')?.errors?.['numeric']">El número de celular debe ser numérico</div>
+            </div>
           </div>
+        
           <div class="form-group">
-            <label for="tipo" class="form-label fw-bold"
-              >Tipo de documento de identidad:</label
-            >
+            <label for="id_tipo_doc" class="form-label fw-bold">Tipo de documento de identidad:</label>
             <select class="form-select" formControlName="id_tipo_doc">
-              @for (tipoDocumento of TipoDocs; track tipoDocumento; let id =
-              $index) {
-              <option value="{{ tipoDocumento.id }}">
+              <option *ngFor="let tipoDocumento of TipoDocs; let id = index" [value]="tipoDocumento.id">
                 {{ tipoDocumento.descripcion }}
               </option>
-              }
             </select>
+            <div *ngIf="Form.get('id_tipo_doc')?.touched && Form.get('id_tipo_doc')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('id_tipo_doc')?.errors?.['required']">El tipo de documento es requerido</div>
+            </div>
           </div>
+        
           <div class="form-group">
-            <label for="documento" class="form-label fw-bold"
-              >Documento de Identidad:</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Documento"
-              formControlName="num_documento"
-            />
+            <label for="num_documento" class="form-label fw-bold">Documento de Identidad:</label>
+            <input type="text" class="form-control" placeholder="Documento" formControlName="num_documento" />
+            <div *ngIf="Form.get('num_documento')?.touched && Form.get('num_documento')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('num_documento')?.errors?.['required']">El documento de identidad es requerido</div>
+            </div>
           </div>
+        
           <div class="form-group">
-            <label for="password" class="form-label fw-bold">Contraseña:</label>
-            <input
-              type="password"
-              class="form-control"
-              placeholder="Contraseña"
-              formControlName="contrasena"
-            />
+            <label for="contrasena" class="form-label fw-bold">Contraseña:</label>
+            <input type="password" class="form-control" placeholder="Contraseña" formControlName="contrasena" />
+            <div *ngIf="Form.get('contrasena')?.touched && Form.get('contrasena')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('contrasena')?.errors?.['required']">La contraseña es requerida</div>
+              <div *ngIf="Form.get('contrasena')?.errors?.['minlength']">La contraseña debe tener al menos 3 caracteres</div>
+              <div *ngIf="Form.get('contrasena')?.errors?.['maxlength']">La contraseña no puede exceder 200 caracteres</div>
+            </div>
           </div>
-
+        
           <div class="form-group">
             <label for="genero" class="form-label fw-bold">Genero:</label>
             <select class="form-select" formControlName="genero">
@@ -447,56 +343,47 @@
               <option value="Otro">Otro</option>
               <option value="PrefieroNoDecir">Prefiero no decir</option>
             </select>
+            <div *ngIf="Form.get('genero')?.touched && Form.get('genero')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('genero')?.errors?.['required']">El género es requerido</div>
+            </div>
           </div>
-
+        
           <div class="form-group">
-            <label for="fecha_nacimiento" class="form-label fw-bold"
-              >Fecha de nacimiento:</label
-            >
-            <input
-              type="date"
-              class="form-control"
-              placeholder="Fecha de Nacimiento"
-              formControlName="fecha_nacimiento"
-            />
+            <label for="fecha_nacimiento" class="form-label fw-bold">Fecha de nacimiento:</label>
+            <input type="date" class="form-control" placeholder="Fecha de Nacimiento" formControlName="fecha_nacimiento" />
+            <div *ngIf="Form.get('fecha_nacimiento')?.touched && Form.get('fecha_nacimiento')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('fecha_nacimiento')?.errors?.['required']">La fecha de nacimiento es requerida</div>
+            </div>
           </div>
-
+        
           <div class="form-group">
-            <label for="rol" class="form-label fw-bold">Rol:</label>
+            <label for="id_rol" class="form-label fw-bold">Rol:</label>
             <select class="form-select" formControlName="id_rol">
-              @for (Rol of Roles; track Rol; let id = $index) {
-              <option value="{{ Rol.id }}">{{ Rol.descripcion }}</option>
-              }
+              <option *ngFor="let Rol of Roles; let id = index" [value]="Rol.id">{{ Rol.descripcion }}</option>
             </select>
+            <div *ngIf="Form.get('id_rol')?.touched && Form.get('id_rol')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('id_rol')?.errors?.['required']">El rol es requerido</div>
+              <div *ngIf="Form.get('id_rol')?.errors?.['maxSuperAdmins']">{{ errorMessage }}</div>
+            </div>
           </div>
-
+        
           <div class="form-group">
             <label for="foto" class="form-label fw-bold">Foto:</label><br />
-            <input
-              type="file"
-              accept="image/*"
-              (change)="seleccionarArchivo($event)"
-              formControlName="foto"
-            />
+            <input type="file" accept="image/*" (change)="seleccionarArchivo($event)" formControlName="foto" />
+            <div *ngIf="Form.get('foto')?.touched && Form.get('foto')?.invalid" class="text-danger">
+              <div *ngIf="Form.get('foto')?.errors?.['required']">La foto es requerida</div>
+            </div>
           </div>
+        
           <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-              (click)="cerrarForm()"
-            >
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cerrarForm()">
               Close
             </button>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              [disabled]="Form.invalid"
-            >
+            <button type="submit" class="btn btn-primary" [disabled]="Form.invalid">
               Guardar
             </button>
           </div>
-        </form>
+        </form>        
       </div>
     </div>
   </div>

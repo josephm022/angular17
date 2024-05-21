@@ -19,3 +19,9 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Añade sombra para resaltar la imagen */
     background-color: white; /* Añade fondo blanco para que se vea bien al agrandarse */
 }
+
+.text-danger {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }

@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
 
   usuario: Usuario = {
     nombres: '',
-    apelllidos: '',
+    apellidos: '',
     email: '',
     num_telefono: '',
     num_documento: '',
