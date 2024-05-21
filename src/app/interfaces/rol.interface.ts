@@ -1,4 +1,4 @@
 export interface Rol{
-    id?:            string;
+    id:            string;
     descripcion:    string;
 }

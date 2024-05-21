@@ -8,11 +8,12 @@ import { RolesService } from '../../services/roles.service';
 import { error } from 'console';
 import { TipoDocService } from '../../services/tipo-doc.service';
 import { tipoDocumento } from '../../interfaces/tipo-doc.interface';
+import { DomseguroPipe } from '../../pipes/domseguro.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [],
+  imports: [DomseguroPipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
@@ -22,9 +23,11 @@ export class HomeComponent implements OnInit {
   fechaFormateada: string;
 
   rol: Rol ={
+    id:'',
     descripcion: ''
   }
   tipoDoc: tipoDocumento ={
+    id:'',
     descripcion: ''
   }
 

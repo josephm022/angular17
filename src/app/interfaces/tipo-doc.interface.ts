@@ -1,4 +1,4 @@
 export interface tipoDocumento{
-    id?:            string;
+    id:            string;
     descripcion:    string;
 }

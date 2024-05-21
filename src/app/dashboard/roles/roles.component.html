@@ -3,8 +3,8 @@
     <i class="fa-solid fa-users"></i> Gestion de Roles de Usuario
   </h3>
 
-  <button class="btn btn-secondary mb-4">
-    <i class="fas fa-plus"></i> Agregar Rol
+  <button class="btn btn-secondary mb-4" data-bs-toggle="modal" data-bs-target="#agregar">
+    <i class="fas fa-plus" ></i> Agregar Rol
   </button>
 
   <table class="table caption-top">
@@ -21,7 +21,7 @@
         <th scope="row">{{ id +1 }}</th>
         <td>{{ rol.descripcion }}</td>
         <td>
-          <button class="btn btn-secondary me-2">
+          <button class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#editar" (click)="obtenerUnRol(rol.id)">
             <i class="fas fa-pencil-alt"></i>
           </button>
           <button class="btn btn-danger">
@@ -32,4 +32,67 @@
       }
     </tbody>
   </table>
+</div>
+
+
+
+<!-- Modal Agregar -->
+<div class="modal fade" id="agregar" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+          <div class="modal-header bg-dark text-white">
+              <h5 class="modal-title" id="staticBackdropLabel"><i class="fas fa-plus"></i> Agregar Rol</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="cerrarForm()" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form (ngSubmit)="agregarRol()" [formGroup]="Form" autocomplete="off">
+                  <div class="form-group">
+                      <label for="nombre" class="form-label fw-bold">Descripcion:</label>
+                      <input type="text" class="form-control" placeholder="Nombre del rol" formControlName="descripcion">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cerrarForm()">Close</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="Form.invalid">Guardar</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<!-- Modal Editar -->
+<div class="modal fade" id="editar" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-dark text-white">
+          <h5 class="modal-title" id="staticBackdropLabel">
+            <i class="fas fa-pencil-alt"></i> Editar Rol
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            (click)="cerrarForm()"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+          <div class="modal-body">
+              <form (ngSubmit)="editarRol()" [formGroup]="Form" autocomplete="off">
+                  <div class="form-group">
+                      <label for="nombre" class="form-label fw-bold">Descripcion:</label>
+                      <input type="text" class="form-control" placeholder="Nombre del rol" formControlName="descripcion">
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cerrarForm()">Close</button>
+                    <button type="submit" class="btn btn-primary" [disabled]="Form.invalid">Guardar</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
 </div>

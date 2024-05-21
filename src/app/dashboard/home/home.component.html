@@ -8,7 +8,7 @@
                 <div class="card-body">
                   @if (usuario.foto) {
                   <div style="display: inline-block;"> <!-- Estilo inline para centrar horizontalmente -->
-                    <img [src]="usuario.foto" class="user-img mb-3"> <!-- Mantiene la clase 'user-img' en la imagen -->
+                    <img [src]="usuario.foto | domseguro" class="user-img mb-3"> <!-- Mantiene la clase 'user-img' en la imagen -->
                   </div>
                   } @else {
                   <div style="display: inline-block;"> <!-- Estilo inline para centrar horizontalmente -->
