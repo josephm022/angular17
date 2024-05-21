@@ -49,11 +49,13 @@ export class UsuariosComponent implements OnInit {
 
   roles: Map<string, string> = new Map();
   documentos: Map<string, string> = new Map();
-  archivo: UpLoadImg;
-  noImage ='https://static.vecteezy.com/system/resources/previews/010/260/479/non_2x/default-avatar-profile-icon-of-social-media-user-in-clipart-style-vector.jpg';
+  
   formulario: any;
   Form: FormGroup;
+
   uuid = uuidv4();
+  archivo: UpLoadImg;
+  noImage ='https://static.vecteezy.com/system/resources/previews/010/260/479/non_2x/default-avatar-profile-icon-of-social-media-user-in-clipart-style-vector.jpg';
 
   Roles: any = [];
   TipoDocs: any = [];
@@ -119,27 +121,28 @@ export class UsuariosComponent implements OnInit {
   
 
   /*****OBTENER UN USUARIO PARA EDITARLO */
-  obtenerUnUsuario(id: string) {
-    this.usuarioService.obtenerUnUsuario(id).subscribe((res: Usuario) => {
-      this.usuario = res;
-      this.Form.setValue({
-        nombres: this.usuario[0]['nombres'],
-        apellidos: this.usuario[0]['apellidos'],
-        email: this.usuario[0]['email'],
-        num_telefono: this.usuario[0]['num_telefono'],
-        num_documento: this.usuario[0]['num_documento'],
-        contrasena: this.usuario[0]['contrasena'],
-        genero: this.usuario[0]['genero'],
-        fecha_nacimiento: this.usuario[0]['fecha_nacimiento'],
-        activo: '1',
-        id_rol: this.usuario[0]['id_rol'],
-        id_tipo_doc: this.usuario[0]['id_tipo_doc'],
-        foto: null,
-      });
-      localStorage.setItem('idUsuario', this.usuario[0]['id']);
-      localStorage.setItem('imgUsuario', this.usuario[0]['foto']);
-    });
-  }
+  obtenerUnUsuario(id: string): void {
+    this.usuarioService.obtenerUnUsuario(id).subscribe(
+      (res: Usuario) => {
+        this.usuario = res;
+        this.Form.setValue({
+          nombres: this.usuario.nombres,
+          apellidos: this.usuario.apellidos,
+          email: this.usuario.email,
+          num_telefono: this.usuario.num_telefono,
+          num_documento: this.usuario.num_documento,
+          contrasena: this.usuario.contrasena,
+          genero: this.usuario.genero,
+          fecha_nacimiento: this.usuario.fecha_nacimiento,
+          activo: this.usuario.activo,
+          id_rol: this.usuario.id_rol,
+          id_tipo_doc: this.usuario.id_tipo_doc,
+          foto: null
+        });
+        localStorage.setItem('idUsuario', this.usuario.id);
+        localStorage.setItem('imgUsuario', this.usuario.foto);
+  });
+}
 /******EDITAR EL USUARIO CON EL ID DEL LOCAL STORAGE */
   editarUsuario() {
     let imgUsuario = localStorage.getItem('imgUsuario');

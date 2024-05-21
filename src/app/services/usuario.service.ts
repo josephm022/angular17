@@ -23,12 +23,10 @@ export class UsuarioService {
     );
   }
 
-
-
   obtenerUnUsuario(id:string){
     return this.http.get<any>(`${this.URL}/index.php?action=usuario&id=${id}`)
   }
-  agregarUsuario(formData: any){
+  agregarUsuario(formData: Usuario){
     return this.http.post<any>(`${this.URL}/index.php?action=usuario`,formData);//.pipe(catchError(this.handleError)    );
   }
   

@@ -50,7 +50,7 @@ export class HomeComponent implements OnInit {
     if (userId) {
       this.auth.obtenerUnUsuario(userId).subscribe(
         (response) => {
-          this.usuario = response[0]; // Asumiendo que la respuesta es un array
+          this.usuario = response; // Asumiendo que la respuesta es un array
           this.rolesService.obtenerUnRol(this.usuario.id_rol).subscribe(
             (response) => {
               this.rol = response[0];
