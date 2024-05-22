@@ -7,6 +7,7 @@ import { RolesComponent } from './dashboard/roles/roles.component';
 import { TipoDocumentosComponent } from './dashboard/tipo-documentos/tipo-documentos.component';
 import { AuthGuard } from './guard/auth.guard';
 import { HomeComponent } from './dashboard/home/home.component';
+import { DocumentosEliminadosComponent } from './dashboard/documentos-eliminados/documentos-eliminados.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -20,7 +21,9 @@ export const routes: Routes = [
       {path: '', component:HomeComponent},
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'roles', component: RolesComponent },
-      { path: 'documentos', component: TipoDocumentosComponent },
+      { path: 'documentos', component: TipoDocumentosComponent},
+      {  path:'documentos-eliminados', component: DocumentosEliminadosComponent}
+      
     ],
   },
 ];

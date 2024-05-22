@@ -2,10 +2,24 @@
     <h3 class="text-center mb-2 mt-2" mt-3>
       <i class="fa-solid fa-users"></i> Gestion de Tipos de Documento
     </h3>
+
+
+    <div class="container ">
+      <div class="row mb-4">
+          <div class="col">
+              <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#agregar">
+                  <i class="fas fa-plus"></i> Agregar Tipo de Documento
+              </button>
+          </div>
+          <div class="col text-end">
+              <button class="btn btn-secondary" (click)="navegarEliminados()">
+                  <i class="fas fa-trash-restore"></i> Elementos eliminados
+              </button>
+          </div>
+      </div>
+  </div>
   
-    <button class="btn btn-secondary mb-4" data-bs-toggle="modal" data-bs-target="#agregar">
-      <i class="fas fa-plus"></i> Agregar Tipo de Documento
-    </button>
+    
   
     <table class="table caption-top">
       <thead class="table-dark">
@@ -16,23 +30,23 @@
         </tr>
       </thead>
       <tbody>
-        @for (tipoDoc of tipoDocs; track tipoDoc; let id = $index) {
-        <tr>
-          <th scope="row">{{ id +1 }}</th>
-          <td>{{ tipoDoc.descripcion }}</td>
-          <td>
-            <button class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#editar" (click)="obtenerUnDocumento(tipoDoc.id)">
-              <i class="fas fa-pencil-alt"></i>
-            </button>
-            <button class="btn btn-danger">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </td>
-        </tr>
+        @for (tipoDoc of tipoDocsActivos; track tipoDoc; let id = $index) {
+            <tr>
+              <th scope="row">{{ id +1 }}</th>
+              <td>{{ tipoDoc.descripcion }}</td>
+              <td>
+                <button class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#editar" (click)="obtenerUnDocumento(tipoDoc.id)">
+                  <i class="fas fa-pencil-alt"></i>
+                </button>
+                <button class="btn btn-danger" (click)="borrarElemento(tipoDoc.id)" >
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
         }
       </tbody>
     </table>
-  </div>
+</div>
   
   <!-- Modal Agregar -->
 <div class="modal fade" id="agregar" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -48,7 +62,7 @@
               <form (ngSubmit)="agregarDocumento()" [formGroup]="Form" autocomplete="off">
                   <div class="form-group">
                       <label for="nombre" class="form-label fw-bold">Descripcion:</label>
-                      <input type="text" class="form-control" placeholder="Nombre del rol" formControlName="descripcion">
+                      <input type="text" class="form-control" placeholder="Descripcion" formControlName="descripcion">
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cerrarForm()">Close</button>
@@ -83,7 +97,7 @@
               <form (ngSubmit)="editarDocumento()" [formGroup]="Form" autocomplete="off">
                   <div class="form-group">
                       <label for="nombre" class="form-label fw-bold">Descripcion:</label>
-                      <input type="text" class="form-control" placeholder="Nombre del rol" formControlName="descripcion">
+                      <input type="text" class="form-control" placeholder="Descripcion" formControlName="descripcion">
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cerrarForm()">Close</button>

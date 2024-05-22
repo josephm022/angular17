@@ -4,66 +4,108 @@
             <h2 class="text-center mt-5">Registro de Usuario</h2>
             <form  [formGroup]="formUser">
                 <div class="mb-3">
-                    <label for="firstName" class="form-label">Nombres</label>
+                    <label for="firstName" class="form-label">Nombres:</label>
                     <input type="text" class="form-control" formControlName="nombre" id="firstName" placeholder="Ingrese sus nombres" maxlength="40">
+                    <div *ngIf="formUser.get('nombre')?.touched && formUser.get('nombre')?.invalid" class="text-danger">
+                    <div *ngIf="formUser.get('nombre')?.errors?.['required']">El nombre es requerido</div>
+                    </div>
                 </div>
+                
                 <div class="mb-3">
-                    <label for="lastName" class="form-label">Apellidos</label>
+                    <label for="lastName" class="form-label">Apellidos:</label>
                     <input type="text" class="form-control" formControlName="apellido" id="lastName" placeholder="Ingrese sus apellidos" maxlength="40">
+                    <div *ngIf="formUser.get('apellido')?.touched && formUser.get('apellido')?.invalid" class="text-danger">
+                        <div *ngIf="formUser.get('apellido')?.errors?.['required']">Los apellidos son requeridos</div>
+                    </div>
                 </div>
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
+                    <label for="email" class="form-label">Correo electrónico:</label>
                     <input type="email" class="form-control" formControlName="email" id="email" placeholder="Ingrese su email" maxlength="40">
+                    <div *ngIf="formUser.get('email')?.touched && formUser.get('email')?.invalid" class="text-danger">
+                        <div *ngIf="formUser.get('email')?.errors?.['required']">El correo electrónico es requerido</div>
+                        <div *ngIf="formUser.get('email')?.errors?.['email']">Formato de correo no válido</div>
+                        <div *ngIf="formUser.get('email')?.errors?.['maxlength']">El correo no puede exceder 40 caracteres</div>
+                    </div>
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Contraseña</label>
+                    <label for="password" class="form-label">Contraseña:</label>
                     <input type="password" class="form-control" formControlName="password" id="password" placeholder="Ingrese su Contraseña" maxlength="200">
+                    <div *ngIf="formUser.get('password')?.touched && formUser.get('password')?.invalid" class="text-danger">
+                        <div *ngIf="formUser.get('password')?.errors?.['required']">La contraseña es requerida</div>
+                        <div *ngIf="formUser.get('password')?.errors?.['minlength']">La contraseña debe tener al menos 3 caracteres</div>
+                        <div *ngIf="formUser.get('password')?.errors?.['maxlength']">La contraseña no puede exceder 200 caracteres</div>
+                      </div>
                 </div>
                 <div class="mb-3">
-                    <label for="phoneNumber" class="form-label">Número de Celular</label>
+                    <label for="phoneNumber" class="form-label">Número de Celular:</label>
                     <input type="tel" class="form-control" formControlName="numerotel" id="phoneNumber" placeholder="Ingrese su número de celular">
+                    <div *ngIf="formUser.get('numerotel')?.touched && formUser.get('numerotel')?.invalid" class="text-danger">
+                        <div *ngIf="formUser.get('numerotel')?.errors?.['required']">El número de celular es requerido</div>
+                        <div *ngIf="formUser.get('numerotel')?.errors?.['numeric']">El número de celular debe ser numérico</div>
+                      </div>
                 </div>
+                
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="documentType" class="form-label">Tipo de Documento de Identidad</label>
+                        <label for="documentType" class="form-label">Tipo de Documento de Identidad:</label>
 
                         <select class="form-select" formControlName="tipodocumento" id="documentType">
                             @for (tipoDocumento of tipoDocs; track tipoDocumento; let id = $index) {
-                                <option value="{{tipoDocumento.id}}">{{tipoDocumento.descripcion}}</option>
+                                @if(tipoDocumento.activo == 1){
+                                    <option value="{{tipoDocumento.id}}">{{tipoDocumento.descripcion}}</option>
+                                }
                             }
                         </select>
+                        <div *ngIf="formUser.get('tipodocumento')?.touched && formUser.get('tipodocumento')?.invalid" class="text-danger">
+                            <div *ngIf="formUser.get('tipodocumento')?.errors?.['required']">El tipo de documento es requerido</div>
+                        </div>
                     </div>
                     <div class="col-md-6">
-                        <label for="documentNumber" class="form-label">Número de Documento de Identidad</label>
+                        <label for="documentNumber" class="form-label">Número de Documento de Identidad:</label>
                         <input type="text" class="form-control" formControlName="numdocumento" id="documentNumber" placeholder="Ingrese su número de documento">
+                        <div *ngIf="formUser.get('numdocumento')?.touched && formUser.get('numdocumento')?.invalid" class="text-danger">
+                            <div *ngIf="formUser.get('numdocumento')?.errors?.['required']">El documento de identidad es requerido</div>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <label for="gender" class="form-label">Género</label>
+                        <label for="gender" class="form-label">Género:</label>
                             <select class="form-select" formControlName="genero" id="gender" >
-                                <option value="masculino">Masculino</option>
-                                <option value="femenino">Femenino</option>
-                                <option value="otro">Otro</option>
-                                <option value="prefieroNoDecir">Prefiero no decir</option>
-                            </select>   
+                                <option value="Masculino">Masculino</option>
+                                <option value="Femenino">Femenino</option>
+                                <option value="Otro">Otro</option>
+                                <option value="PrefieroNoDecir">Prefiero no decir</option>
+                            </select>  
+                            <div *ngIf="formUser.get('genero')?.touched && formUser.get('genero')?.invalid" class="text-danger">
+                                <div *ngIf="formUser.get('genero')?.errors?.['required']">El género es requerido</div>
+                              </div> 
                     </div>
                     <div class="col-md-6">
-                        <label for="role" class="form-label">Rol dentro de la Aplicación</label>
+                        <label for="role" class="form-label">Rol dentro de la Aplicación:</label>
                             <select class="form-select" formControlName="rol" id="role">
                                 @for (rol of roles; track rol; let id = $index) {
-                                <option value={{rol.id}}>{{rol.descripcion}}</option>
+                                    @if(rol.activo == 1){
+                                        <option value={{rol.id}}>{{rol.descripcion}}</option>
+                                    }
                                 }
                             </select>
+                            <div *ngIf="formUser.get('rol')?.touched && formUser.get('rol')?.invalid" class="text-danger">
+                                <div *ngIf="formUser.get('rol')?.errors?.['required']">El rol es requerido</div>
+                                <div *ngIf="formUser.get('rol')?.errors?.['maxSuperAdmins']">{{ errorMessage }}</div>
+                              </div>
                     </div>
                 </div> 
                 <div class="mb-3">
-                    <label for="birthDate" class="form-label">Fecha de Nacimiento</label>
+                    <label for="birthDate" class="form-label">Fecha de Nacimiento:</label>
                     <input type="date" class="form-control" formControlName="fecha" id="birthDate" name="birthDate">
+                    <div *ngIf="formUser.get('fecha')?.touched && formUser.get('fecha')?.invalid" class="text-danger">
+                        <div *ngIf="formUser.get('fecha')?.errors?.['required']">La fecha de nacimiento es requerida</div>
+                      </div>
                 </div>
                 <div class="mb-3">
-                    <label for="photo" class="form-label">Subir Imagen</label>
-                    <input type="file" class="form-control" formControlName="imagen" id="photo" name="photo" accept="image/*">
+                    <label for="photo" class="form-label">Subir Foto:</label>
+                    <input type="file" class="form-control" formControlName="foto" id="photo" name="foto" (change)="seleccionarArchivo($event)" accept="image/*">
                 </div>
 
                 <div class="mb-3">

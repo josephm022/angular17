@@ -6,11 +6,12 @@ import { UsuarioService } from './services/usuario.service';
 import { Usuario } from './interfaces/usuario.interface';
 import { HttpClientModule } from '@angular/common/http';
 import { DomseguroPipe } from './pipes/domseguro.pipe';
+import { DocumentosEliminadosComponent } from './dashboard/documentos-eliminados/documentos-eliminados.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,LoginComponent,RegisterComponent,HttpClientModule,DomseguroPipe],
+  imports: [RouterOutlet,LoginComponent,RegisterComponent,HttpClientModule,DomseguroPipe,DocumentosEliminadosComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -18,17 +19,11 @@ export class AppComponent implements OnInit{
 
   usuarios:any =[];
 
-  constructor(private usuarioService:UsuarioService){}
+  constructor(){}
   ngOnInit() {
-    //this.obtenerContactos();
+ 
   }
   title = 'trabajo-final';
   usuarioLogged = true;
 
-  /*obtenerUsuarios(){
-    this.usuarioService.obtenerUsuarios().subscribe((res:Usuario)=>{
-      this.usuarios = res;
-      console.log(this.usuarios); 
-    })
-  }*/
 }

@@ -235,7 +235,7 @@ export class UsuariosComponent implements OnInit {
         Swal.fire({
           icon: 'success',
           title: 'Éxito',
-          text: res.message || 'Contacto creado correctamente',
+          text: res.message || 'Usuario creado correctamente',
           showConfirmButton: true,
         }).then((result) => {
           location.reload();
@@ -281,7 +281,8 @@ export class UsuariosComponent implements OnInit {
   }
   verUsuario(id: string) {
     this.usuarioService.obtenerUnUsuario(id).subscribe((res) => {
-      this.usuarioSeleccionado = res[0];
+      console.log(res)
+      this.usuarioSeleccionado = res;
     });
   }
   

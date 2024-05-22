@@ -1,0 +1,29 @@
+<div class="container">
+    <h3 class="text-center mb-2 mt-2" mt-3>
+      <i class="fa-solid fa-users"></i> Gestion de Tipos de Documento
+    </h3>
+  
+    <table class="table caption-top">
+      <thead class="table-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Tipo de Documento</th>
+          <th scope="col">Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (tipoDoc of tipoDocsInactivos; track tipoDoc; let id = $index) {
+            <tr>
+              <th scope="row">{{ id +1 }}</th>
+              <td>{{ tipoDoc.descripcion }}</td>
+              <td>
+                <button class="btn btn-secondary me-2" (click)="restaurar(tipoDoc.id)">
+                  <i class="fas fa-pencil-alt"></i> Restaurar
+                </button>
+                
+              </td>
+            </tr>
+        }
+      </tbody>
+    </table>
+</div>

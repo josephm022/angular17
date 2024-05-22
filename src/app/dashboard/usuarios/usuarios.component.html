@@ -308,6 +308,7 @@
           <div class="form-group">
             <label for="id_tipo_doc" class="form-label fw-bold">Tipo de documento de identidad:</label>
             <select class="form-select" formControlName="id_tipo_doc">
+              
               <option *ngFor="let tipoDocumento of TipoDocs; let id = index" [value]="tipoDocumento.id">
                 {{ tipoDocumento.descripcion }}
               </option>
