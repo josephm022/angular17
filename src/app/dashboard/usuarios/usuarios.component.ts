@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CabeceroComponent } from '../cabecero/cabecero.component';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { UsuarioService } from '../../services/usuario.service';
 import { Usuario } from '../../interfaces/usuario.interface';
 import { DomseguroPipe } from '../../pipes/domseguro.pipe';
@@ -64,7 +64,8 @@ export class UsuariosComponent implements OnInit {
     private usuarioService: UsuarioService,
     private fb: FormBuilder,
     private rolesService: RolesService,
-    private documentosService: TipoDocService
+    private documentosService: TipoDocService,
+    private router:Router
   ) {
     this.archivo = {
       nombreArchivo: '',
@@ -326,6 +327,10 @@ export class UsuariosComponent implements OnInit {
     this.rolesService.obtenerRoles().subscribe((res: Rol) => {
       this.Roles = res;
     });
+  }
+
+  navegarEliminados(){
+    this.router.navigate(['/home/usuarios-eliminados'])
   }
   
   /*****   CIERRA EL FORMULARIO Y ELIMINA LOS DATOS*****/

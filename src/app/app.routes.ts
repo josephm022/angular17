@@ -9,6 +9,7 @@ import { AuthGuard } from './guard/auth.guard';
 import { HomeComponent } from './dashboard/home/home.component';
 import { DocumentosEliminadosComponent } from './dashboard/documentos-eliminados/documentos-eliminados.component';
 import { RolesEliminadosComponent } from './dashboard/roles-eliminados/roles-eliminados.component';
+import { UsuariosEliminadosComponent } from './dashboard/usuarios-eliminados/usuarios-eliminados.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -24,8 +25,8 @@ export const routes: Routes = [
       { path: 'roles', component: RolesComponent },
       { path: 'documentos', component: TipoDocumentosComponent},
       {  path:'documentos-eliminados', component: DocumentosEliminadosComponent},
-      {  path:'roles-eliminados', component: RolesEliminadosComponent}
-      
+      {  path:'roles-eliminados', component: RolesEliminadosComponent},
+      {  path:'usuarios-eliminados', component: UsuariosEliminadosComponent}
     ],
   },
 ];

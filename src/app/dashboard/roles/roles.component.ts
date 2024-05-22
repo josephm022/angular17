@@ -45,7 +45,7 @@ export class RolesComponent implements OnInit{
               // Si el documento existe pero está inactivo, preguntar si se desea activar
               Swal.fire({
                 title: 'Documento inactivo encontrado',
-                text: "Ya existe un documento con esta descripción, pero está inactivo. ¿Deseas activarlo?",
+                text: "Ya existe un Rol con esta descripción, pero está inactivo. ¿Deseas activarlo?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Sí, activarlo',
@@ -58,7 +58,7 @@ export class RolesComponent implements OnInit{
                       Swal.fire({
                         icon: 'success',
                         title: 'Éxito',
-                        text: 'Documento activado correctamente',
+                        text: 'Rol activado correctamente',
                         showConfirmButton: true,
                       }).then(() => {
                         location.reload();
@@ -75,7 +75,7 @@ export class RolesComponent implements OnInit{
               Swal.fire({
                 icon: 'warning',
                 title: 'Documento ya existe',
-                text: 'Ya existe un documento con esta descripción y está activo.',
+                text: 'Ya existe un Rol con esta descripción y está activo.',
                 showConfirmButton: true,
               });
             }
@@ -86,7 +86,7 @@ export class RolesComponent implements OnInit{
                 Swal.fire({
                   icon: 'success',
                   title: 'Éxito',
-                  text: res.message || 'Tipo de documento creado correctamente',
+                  text: res.message || 'Rol creado correctamente',
                   showConfirmButton: true,
                 }).then((result) => {
                   location.reload();
@@ -99,7 +99,7 @@ export class RolesComponent implements OnInit{
           }
         },
         (err) => {
-          Swal.fire('Error', 'No se pudo obtener la lista de documentos', 'error');
+          Swal.fire('Error', 'No se pudo obtener la lista de roles', 'error');
         }
       );
     }
@@ -171,7 +171,7 @@ export class RolesComponent implements OnInit{
           Swal.fire({
             icon: 'success',
             title: 'EXITO',
-            text: 'El tipo de documento ha sido eliminado',
+            text: 'El Rol ha sido eliminado',
             confirmButtonText: 'OK',
           }).then((result) => {
             localStorage.removeItem('idRol');

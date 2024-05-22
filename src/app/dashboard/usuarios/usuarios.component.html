@@ -3,10 +3,21 @@
     <i class="fa-solid fa-users"></i> Gestion de los Usuarios
   </h3>
 
-  <button class="btn btn-secondary mb-4" data-bs-toggle="modal" data-bs-target="#agregar">
-    <i class="fas fa-plus"></i> Agregar Usuario
-  </button>
 
+  <div class="container ">
+    <div class="row mb-4">
+        <div class="col"> 
+          <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#agregar">
+            <i class="fas fa-plus"></i> Agregar Usuario
+          </button>
+        </div>
+        <div class="col text-end">
+            <button class="btn btn-secondary" (click)="navegarEliminados()">
+                <i class="fas fa-trash-restore"></i> Elementos eliminados
+            </button>
+        </div>
+    </div>
+</div>
   <table class="table caption-top">
     <thead class="table-dark">
       <tr>
