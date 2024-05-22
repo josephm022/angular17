@@ -48,7 +48,6 @@ export class TipoDocumentosComponent {
     this.tipoDocService.obtenerDocumentos().subscribe(
       (existentes: any[]) => { 
         const documentoExistente = existentes.find(doc => doc.descripcion === this.formulario.descripcion);
-        console.log(documentoExistente);
         if (documentoExistente) {
           if (documentoExistente.activo == '0') {
           

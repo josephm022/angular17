@@ -3,9 +3,20 @@
     <i class="fa-solid fa-users"></i> Gestion de Roles de Usuario
   </h3>
 
-  <button class="btn btn-secondary mb-4" data-bs-toggle="modal" data-bs-target="#agregar">
-    <i class="fas fa-plus" ></i> Agregar Rol
-  </button>
+  <div class="container ">
+    <div class="row mb-4">
+        <div class="col">
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#agregar">
+                <i class="fas fa-plus"></i> Agregar Rol
+            </button>
+        </div>
+        <div class="col text-end">
+            <button class="btn btn-secondary" (click)="navegarEliminados()">
+                <i class="fas fa-trash-restore"></i> Elementos eliminados
+            </button>
+        </div>
+    </div>
+</div>
 
   <table class="table caption-top">
     <thead class="table-dark">
@@ -16,7 +27,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (rol of roles; track rol; let id = $index) {
+      @for (rol of rolesActivos; track rol; let id = $index) {
       <tr>
         <th scope="row">{{ id +1 }}</th>
         <td>{{ rol.descripcion }}</td>
@@ -24,7 +35,7 @@
           <button class="btn btn-secondary me-2" data-bs-toggle="modal" data-bs-target="#editar" (click)="obtenerUnRol(rol.id)">
             <i class="fas fa-pencil-alt"></i>
           </button>
-          <button class="btn btn-danger">
+          <button class="btn btn-danger" (click)="borrarElemento(rol.id)" >
             <i class="fas fa-trash-alt"></i>
           </button>
         </td>

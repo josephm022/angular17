@@ -8,6 +8,7 @@ import { TipoDocumentosComponent } from './dashboard/tipo-documentos/tipo-docume
 import { AuthGuard } from './guard/auth.guard';
 import { HomeComponent } from './dashboard/home/home.component';
 import { DocumentosEliminadosComponent } from './dashboard/documentos-eliminados/documentos-eliminados.component';
+import { RolesEliminadosComponent } from './dashboard/roles-eliminados/roles-eliminados.component';
 
 export const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -22,7 +23,8 @@ export const routes: Routes = [
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'roles', component: RolesComponent },
       { path: 'documentos', component: TipoDocumentosComponent},
-      {  path:'documentos-eliminados', component: DocumentosEliminadosComponent}
+      {  path:'documentos-eliminados', component: DocumentosEliminadosComponent},
+      {  path:'roles-eliminados', component: RolesEliminadosComponent}
       
     ],
   },
