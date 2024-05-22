@@ -38,28 +38,82 @@ export class TipoDocumentosComponent {
 
     });
   }
-
-  agregarDocumento(){
+  agregarDocumento() {
     this.formulario = {
       descripcion: this.Form.value.descripcion,
       activo: '1',
     };
-    this.tipoDocService.agregarDocumento(this.formulario).subscribe(
-      (res)=>{
-        Swal.fire({
-          icon: 'success',
-          title: 'Éxito',
-          text: res.message || 'Tipo de documento creado correctamente',
-          showConfirmButton: true,
-        }).then((result) => {
-          location.reload();
-        });
+  
+    // Obtener todos los documentos existentes
+    this.tipoDocService.obtenerDocumentos().subscribe(
+      (existentes: any[]) => { 
+        const documentoExistente = existentes.find(doc => doc.descripcion === this.formulario.descripcion);
+        console.log(documentoExistente);
+        if (documentoExistente) {
+          if (documentoExistente.activo == '0') {
+          
+            // Si el documento existe pero está inactivo, preguntar si se desea activar
+            Swal.fire({
+              title: 'Documento inactivo encontrado',
+              text: "Ya existe un documento con esta descripción, pero está inactivo. ¿Deseas activarlo?",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Sí, activarlo',
+              cancelButtonText: 'No, cancelar'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                // Aquí puedes llamar a tu método para editar/activar el documento
+                this.tipoDocService.editarDocumento(documentoExistente.id, { ...documentoExistente, activo: '1' }).subscribe(
+                  (res) => {
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Éxito',
+                      text: 'Documento activado correctamente',
+                      showConfirmButton: true,
+                    }).then(() => {
+                      location.reload();
+                    });
+                  },
+                  (err) => {
+                    Swal.fire('Error', err, 'error');
+                  }
+                );
+              }
+            });
+          } else {
+            // Si el documento existe y está activo, mostrar una advertencia
+            Swal.fire({
+              icon: 'warning',
+              title: 'Documento ya existe',
+              text: 'Ya existe un documento con esta descripción y está activo.',
+              showConfirmButton: true,
+            });
+          }
+        } else {
+          // Si no existe un documento con la misma descripción, agregar el nuevo documento
+          this.tipoDocService.agregarDocumento(this.formulario).subscribe(
+            (res) => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: res.message || 'Tipo de documento creado correctamente',
+                showConfirmButton: true,
+              }).then((result) => {
+                location.reload();
+              });
+            },
+            (err) => {
+              Swal.fire('Error', err, 'error');
+            }
+          );
+        }
       },
       (err) => {
-        Swal.fire('Error', err, 'error');
+        Swal.fire('Error', 'No se pudo obtener la lista de documentos', 'error');
       }
     );
   }
+  
 
   obtenerUnDocumento(id:string){
     this.tipoDocService.obtenerUnDocumento(id).subscribe((res:tipoDocumento) =>{
