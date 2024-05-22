@@ -179,9 +179,13 @@
           <div class="form-group">
             <label for="id_tipo_doc" class="form-label fw-bold">Tipo de documento de identidad:</label>
             <select class="form-select" formControlName="id_tipo_doc" id="documentType">
-              <option *ngFor="let tipoDocumento of TipoDocs; let id = index" [value]="tipoDocumento.id">
-                {{ tipoDocumento.descripcion }}
-              </option>
+              @for (tipoDocumento of TipoDocs; track tipoDocumento; let id = $index) {
+                @if(tipoDocumento.activo == 1){
+                  <option  [value]="tipoDocumento.id">
+                  {{ tipoDocumento.descripcion }}
+                  </option>
+                }
+              }
             </select>
             <div *ngIf="Form.get('id_tipo_doc')?.touched && Form.get('id_tipo_doc')?.invalid" class="text-danger">
               <div *ngIf="Form.get('id_tipo_doc')?.errors?.['required']">El tipo de documento es requerido</div>
@@ -230,7 +234,9 @@
           <div class="form-group">
             <label for="id_rol" class="form-label fw-bold">Rol:</label>
             <select class="form-select" formControlName="id_rol">
-              <option *ngFor="let rol of Roles; let id = index" [value]="rol.id">{{ rol.descripcion }}</option>
+              @for (rol of Roles; track rol; let id = $index) {
+                <option [value]="rol.id">{{ rol.descripcion }}</option>
+              }
             </select>
             <div *ngIf="Form.get('id_rol')?.touched && Form.get('id_rol')?.invalid" class="text-danger">
               <div *ngIf="Form.get('id_rol')?.errors?.['required']">El rol es requerido</div>
@@ -308,10 +314,13 @@
           <div class="form-group">
             <label for="id_tipo_doc" class="form-label fw-bold">Tipo de documento de identidad:</label>
             <select class="form-select" formControlName="id_tipo_doc">
-              
-              <option *ngFor="let tipoDocumento of TipoDocs; let id = index" [value]="tipoDocumento.id">
+            @for (tipoDocumento of TipoDocs; track tipoDocumento; let id = $index) {
+              @if(tipoDocumento.activo == 1){
+                <option  [value]="tipoDocumento.id">
                 {{ tipoDocumento.descripcion }}
-              </option>
+                </option>
+              }
+            }
             </select>
             <div *ngIf="Form.get('id_tipo_doc')?.touched && Form.get('id_tipo_doc')?.invalid" class="text-danger">
               <div *ngIf="Form.get('id_tipo_doc')?.errors?.['required']">El tipo de documento es requerido</div>
@@ -360,7 +369,9 @@
           <div class="form-group">
             <label for="id_rol" class="form-label fw-bold">Rol:</label>
             <select class="form-select" formControlName="id_rol">
-              <option *ngFor="let Rol of Roles; let id = index" [value]="Rol.id">{{ Rol.descripcion }}</option>
+              @for (rol of Roles; track rol; let id = $index) {
+                <option [value]="rol.id">{{ rol.descripcion }}</option>
+              }
             </select>
             <div *ngIf="Form.get('id_rol')?.touched && Form.get('id_rol')?.invalid" class="text-danger">
               <div *ngIf="Form.get('id_rol')?.errors?.['required']">El rol es requerido</div>
