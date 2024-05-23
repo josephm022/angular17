@@ -3,7 +3,6 @@
     <i class="fa-solid fa-users"></i> Gestion de los Usuarios
   </h3>
 
-
   <div class="container ">
     <div class="row mb-4">
         <div class="col"> 
@@ -31,7 +30,7 @@
       </tr>
     </thead>
     <tbody>
-      @for (usuario of usuarios; track usuario; let id = $index) {
+      @for (usuario of usuariosActivos; track usuario; let id = $index) {
       <tr>
         <th scope="row">
           <a href="#" (click)="verUsuario(usuario.id)" data-bs-toggle="modal" data-bs-target="#verUsuario">{{ id + 1
@@ -53,7 +52,7 @@
             (click)="obtenerUnUsuario(usuario.id)">
             <i class="fas fa-pencil-alt"></i>
           </button>
-          <button class="btn btn-danger">
+          <button class="btn btn-danger" (click)="borrarElemento(usuario.id)">
             <i class="fas fa-trash-alt"></i>
           </button>
         </td>

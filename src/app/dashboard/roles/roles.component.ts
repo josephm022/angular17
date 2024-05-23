@@ -52,7 +52,6 @@ export class RolesComponent implements OnInit{
                 cancelButtonText: 'No, cancelar'
               }).then((result) => {
                 if (result.isConfirmed) {
-                  // Aquí puedes llamar a tu método para editar/activar el documento
                   this.rolesService.editarRol(documentoExistente.id, { ...documentoExistente, activo: '1' }).subscribe(
                     (res) => {
                       Swal.fire({

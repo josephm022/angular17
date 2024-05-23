@@ -44,6 +44,7 @@ export class UsuariosComponent implements OnInit {
   usuarios: any = [];
   usuario: any;
   usuarioSeleccionado: any = {};
+  usuariosActivos: any = [];
   maxSuperAdmins = 2;
   errorMessage: string | null = null;
 
@@ -102,6 +103,7 @@ export class UsuariosComponent implements OnInit {
       }
     });
   }
+  
     /**VALIDACION DEL MAXIMO DE USUARIOS SUPER ADMIN */
   maxSuperAdminsValidator(usuarioService: UsuarioService, maxSuperAdmins: number): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
@@ -119,6 +121,36 @@ export class UsuariosComponent implements OnInit {
     };
   }
 /******************************************************** */
+
+borrarElemento(id:string){
+  this.usuarioService.obtenerUnUsuario(id).subscribe((res:Usuario) =>{
+    this.usuario =res;
+    localStorage.setItem('idUsuario', this.usuario.id);
+  });
+  Swal.fire({
+    icon: 'question',
+    title: '¿Está seguro de eliminar este elemento?',
+    showCancelButton: true,
+    confirmButtonText: 'Eliminar',
+  }).then((result) => {
+    if(result.isConfirmed){
+      this.usuario.activo = '0';
+      
+      this.usuarioService.editarUsuario(localStorage.getItem('idUsuario'),this.usuario).subscribe((res)=>{
+        Swal.fire({
+          icon: 'success',
+          title: 'EXITO',
+          text: 'El Usuario ha sido eliminado',
+          confirmButtonText: 'OK',
+        }).then((result) => {
+          localStorage.removeItem('idUsuario');
+          location.reload();
+        })
+      })
+    }
+  })
+}
+
   
 
   /*****OBTENER UN USUARIO PARA EDITARLO */
@@ -214,6 +246,39 @@ export class UsuariosComponent implements OnInit {
 
   
 //AGREGAR USUARIO NUEVO/////
+  /*agregarUsuario(): void {
+    this.formulario = {
+      foto: this.archivo.nombreArchivo,
+      nombres: this.Form.value.nombres,
+      apellidos: this.Form.value.apellidos,
+      email: this.Form.value.email,
+      num_telefono: this.Form.value.num_telefono,
+      num_documento: this.Form.value.num_documento,
+      contrasena: this.Form.value.contrasena,
+      genero: this.Form.value.genero,
+      fecha_nacimiento: this.Form.value.fecha_nacimiento,
+      activo: '1',
+      id_rol: this.Form.value.id_rol,
+      id_tipo_doc: this.Form.value.id_tipo_doc,
+    };
+
+    this.usuarioService.agregarUsuario(this.formulario).subscribe(
+      (res) => {
+        this.upload();
+        Swal.fire({
+          icon: 'success',
+          title: 'Éxito',
+          text: res.message || 'Usuario creado correctamente',
+          showConfirmButton: true,
+        }).then((result) => {
+          location.reload();
+        });
+      },
+      (err) => {
+        Swal.fire('Error', err, 'error');
+      }
+    );
+  }*/
   agregarUsuario(): void {
     this.formulario = {
       foto: this.archivo.nombreArchivo,
@@ -229,24 +294,76 @@ export class UsuariosComponent implements OnInit {
       id_rol: this.Form.value.id_rol,
       id_tipo_doc: this.Form.value.id_tipo_doc,
     };
-    this.usuarioService.agregarUsuario(this.formulario).subscribe(
-      (res) => {
-        this.upload();
-
-        Swal.fire({
-          icon: 'success',
-          title: 'Éxito',
-          text: res.message || 'Usuario creado correctamente',
-          showConfirmButton: true,
-        }).then((result) => {
-          location.reload();
-        });
+  
+    // Obtener todos los usuarios existentes
+    this.usuarioService.obtenerUsuarios().subscribe(
+      (existentes: any[]) => {
+        const usuarioExistente = existentes.find(user => user.email == this.formulario.email);
+  
+        if (usuarioExistente) {
+          if (usuarioExistente.activo == '0') {
+            Swal.fire({
+              title: 'Usuario inactivo encontrado',
+              text: "Ya existe un usuario con este correo electrónico, pero está inactivo. ¿Deseas activarlo?",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Sí, activarlo',
+              cancelButtonText: 'No, cancelar'
+            }).then((result) => {
+              console.log(usuarioExistente);
+              if (result.isConfirmed) {
+                this.usuarioService.editarUsuario(usuarioExistente.id, { ...usuarioExistente, activo: '1' }).subscribe(
+                  (res) => {
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Éxito',
+                      text: 'Usuario activado correctamente',
+                      showConfirmButton: true,
+                    }).then(() => {
+                      location.reload();
+                    });
+                  },
+                  (err) => {
+                    Swal.fire('Error', err, 'error');
+                  }
+                );
+              }
+            });
+          } else {
+            // Si el usuario existe y está activo, mostrar una advertencia
+            Swal.fire({
+              icon: 'warning',
+              title: 'Usuario ya existe',
+              text: 'Ya existe un usuario con este correo electrónico y está activo.',
+              showConfirmButton: true,
+            });
+          }
+        } else {
+          // Si no existe un usuario con el mismo correo electrónico, agregar el nuevo usuario
+          this.usuarioService.agregarUsuario(this.formulario).subscribe(
+            (res) => {
+              this.upload();
+              Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: res.message || 'Usuario creado correctamente',
+                showConfirmButton: true,
+              }).then((result) => {
+                location.reload();
+              });
+            },
+            (err) => {
+              Swal.fire('Error', err, 'error');
+            }
+          );
+        }
       },
       (err) => {
-        Swal.fire('Error', err, 'error');
+        Swal.fire('Error', 'No se pudo obtener la lista de usuarios', 'error');
       }
     );
   }
+  
 
   //TRABAJA CON LAS IMAGENES//////////////////////////////
   seleccionarArchivo(event: any) {
@@ -278,6 +395,8 @@ export class UsuariosComponent implements OnInit {
   obtenerUsuarios() {
     this.usuarioService.obtenerUsuarios().subscribe((res: Usuario) => {
       this.usuarios = res;
+      this.usuariosActivos = this.usuarios.filter((activo: Rol) => activo.activo == '1');
+
     });
   }
   verUsuario(id: string) {
