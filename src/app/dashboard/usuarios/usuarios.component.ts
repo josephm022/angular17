@@ -311,7 +311,23 @@ borrarElemento(id:string){
               cancelButtonText: 'No, cancelar'
             }).then((result) => {
               console.log(usuarioExistente);
-              if (result.isConfirmed) {
+
+              if(result.isConfirmed){
+                this.usuario.activo = '1';
+                
+                this.usuarioService.editarUsuario(localStorage.getItem('idUsuario'),this.usuario).subscribe((res)=>{
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'EXITO',
+                    text: 'El Usuario ha sido eliminado',
+                    confirmButtonText: 'OK',
+                  }).then((result) => {
+                    localStorage.removeItem('idUsuario');
+                    location.reload();
+                  })
+                })
+              }
+             /*if (result.isConfirmed) {
                 this.usuarioService.editarUsuario(usuarioExistente.id, { ...usuarioExistente, activo: '1' }).subscribe(
                   (res) => {
                     Swal.fire({
@@ -327,7 +343,7 @@ borrarElemento(id:string){
                     Swal.fire('Error', err, 'error');
                   }
                 );
-              }
+            }*/
             });
           } else {
             // Si el usuario existe y está activo, mostrar una advertencia
